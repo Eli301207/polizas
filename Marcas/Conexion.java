@@ -17,8 +17,7 @@ public class Conexion {
 
         try {
 
-            cnx = DriverManager.getConnection(
-                "jdbc:mysql://localhost/polizas","j", "123");
+            cnx = DriverManager.getConnection( "jdbc:mysql://localhost/polizas","j", "123");
 
         } catch (SQLException e) {
 

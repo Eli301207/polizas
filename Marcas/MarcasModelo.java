@@ -86,5 +86,24 @@ public class MarcasModelo extends Conexion implements DAO {
             this.close();
         }
         return -1;
+    }public boolean existeNombre(String nombre, int idExcluir) {
+    try {
+        this.conectar();
+        if (cnx != null) {
+            String sql = "SELECT COUNT(*) FROM marcas WHERE LOWER(nombre) = LOWER(?) AND id != ?";
+            ps = cnx.prepareStatement(sql);
+            ps.setString(1, nombre.trim());
+            ps.setInt(2, idExcluir);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error al verificar duplicado: " + ex.getMessage());
+    } finally {
+        this.close();
     }
-}
+    return false;
+}}

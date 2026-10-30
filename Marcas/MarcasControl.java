@@ -21,19 +21,39 @@ public class MarcasControl {
             lista = mm.read();
             mv.actualizarVista(lista);
         });
-
         mv.btn_a.addActionListener(e -> {
-            Marca marca = new Marca(0, mv.txt1.getText());
+            String nombre = mv.txt1.getText().trim();
+
+            if (nombre.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingresa un nombre para la marca.");
+                return;
+            }
+
+            if (mm.existeNombre(nombre, 0)) {
+                JOptionPane.showMessageDialog(null, "La marca '" + nombre + "' ya existe en el sistema.");
+                return; 
+            }
+
+            Marca marca = new Marca(0, nombre);
             int res = mm.create(marca);
             JOptionPane.showMessageDialog(null, "Resultado: " + res);
             mv.actualizarVista(mm.read());
         });
-
         mv.btn_u.addActionListener(e -> {
             int fila = mv.tabla.getSelectedRow();
             if (fila != -1) {
                 int id = (int) mv.marcasModelo.getValueAt(fila, 0);
-                String nuevoNombre = mv.txt1.getText();
+                String nuevoNombre = mv.txt1.getText().trim();
+
+                if (nuevoNombre.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Ingresa un nombre válido.");
+                    return;
+                }
+                if (mm.existeNombre(nuevoNombre, id)) {
+                    JOptionPane.showMessageDialog(null, "Ya existe otra marca registrada como '" + nuevoNombre + "'.");
+                    return; 
+                }
+
                 Marca marca = new Marca(id, nuevoNombre);
                 
                 int res = mm.update(marca);

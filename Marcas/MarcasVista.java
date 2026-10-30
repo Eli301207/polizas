@@ -31,7 +31,7 @@ public class MarcasVista extends JPanel {
         this.txt1 = new JTextField("Marca");
         this.txt1.setBounds(170, 40, 250, 30);
 
-        cmbMarcas = new JComboBox<>();
+        cmbMarcas = new JComboBox();
         cmbMarcas.setBounds(500, 40, 250, 30);
         add(cmbMarcas);
 
